@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Guitar chord maker</h1>
-    <sub>This was made for personal use to help with learning notes on strings and to visualise chords</sub>
+    <h1>Guitar notes</h1>
+    <sub>This was made to help with learning notes on strings and to visualise it on a fretboard</sub>
     <!-- form -->
     <form action="" onsubmit="return false">
         <label for="notes">Type each note here, separate them using spacebar: </label>
@@ -264,6 +264,7 @@
 
         // showing notes on fretboard
         notes.forEach((note, index_of_note) => {
+            // last index because of the open strings
             first_string_note = first_string.lastIndexOf(note);        
             second_string_note = second_string.lastIndexOf(note);
             third_string_note = third_string.lastIndexOf(note);
@@ -320,7 +321,11 @@
         });
     
     }
-    
+    // TO DO LIST
+    // - remove the button, do the addEventListener("keypress")
+    // - move css into a html file
+    // - fix those 22 <td> in each table row and just make it into a javascript loop that creates elements
+    // - add clickable notes on a fretboard, so you can hide those that you don't want to see on a fretboard (cannot describe this idea properly)
 </script>
 </body>
 </html>
