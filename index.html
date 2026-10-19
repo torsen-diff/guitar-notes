@@ -4,197 +4,97 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guitar chord maker</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+    * {
+        font-family:Verdana, Geneva, Tahoma, sans-serif;
+    }
+
+    body {
+        padding: 15px;
+    }
+
+    tr.string > td, td {
+        width: 50px;
+        height: 25px;
+        margin: 0;
+        text-align: center;
+        font-size: 14px;
+    }
+
+    tr.string > td {
+        border: 1px solid black;
+    }
+
+    th {
+        margin: 0;
+        text-align: center;
+        width: 40px;
+        height: 30px;
+    }
+
+    form {
+        margin: 30px 0;
+    }
+
+    form > * {
+        margin: 10px;
+    }
+
+    .active_note {
+        background-color: red;
+}
+</style>
 </head>
 <body>
     <h1>Guitar notes</h1>
     <sub>This was made to help with learning notes on strings and to visualise it on a fretboard</sub>
     <!-- form -->
-    <form action="" onsubmit="return false">
+    <form action="" onsubmit="return false" id="notes_form">
         <label for="notes">Type each note here, separate them using spacebar: </label>
         <input type="text" name="notes" id="notes"><br>
         
         <button id="submit" onclick="placeNotes()">Submit</button>
+        <button id="clear" onclick="clearNotes()">Clear</button>
     </form>
     <!-- fretboard -->
     <table>
         <tr id="first_string" class="string">
             <th>e</th>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
         </tr>
         <tr id="second_string" class="string">
             <th>h</th>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
         </tr>
         <tr id="third_string" class="string">
             <th>g</th>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
         </tr>
         <tr id="fourth_string" class="string">
             <th>d</th>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
         </tr>
         <tr id="fifth_string" class="string">
             <th>a</th>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
         </tr>
         <tr id="sixth_string" class="string">
             <th>e</th>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
         </tr>
         <tr id="frets">
             <th>frets</th>
-            <td>1</td>
-            <td>2</td>
-            <td>3</td>
-            <td>4</td>
-            <td>5</td>
-            <td>6</td>
-            <td>7</td>
-            <td>8</td>
-            <td>9</td>
-            <td>10</td>
-            <td>11</td>
-            <td>12</td>
-            <td>13</td>
-            <td>14</td>
-            <td>15</td>
-            <td>16</td>
-            <td>17</td>
-            <td>18</td>
-            <td>19</td>
-            <td>20</td>
-            <td>21</td>
-            <td>22</td>
         </tr>
     </table>
 <script defer>
+    // loop that creates all 22 table datas, instead of them being typed in a table manualy, saves a lot of space tbh
+    for(let i = 1; i<= 22; i++){
+        document.querySelector("#first_string").appendChild(document.createElement("td"));
+        document.querySelector("#second_string").appendChild(document.createElement("td"));
+        document.querySelector("#third_string").appendChild(document.createElement("td"));
+        document.querySelector("#fourth_string").appendChild(document.createElement("td"));
+        document.querySelector("#fifth_string").appendChild(document.createElement("td"));
+        document.querySelector("#sixth_string").appendChild(document.createElement("td"));
+        frets_td = document.createElement("td");
+        frets_td_text = document.createTextNode(i);
+        frets_td.appendChild(frets_td_text);
+        document.querySelector("#frets").appendChild(frets_td);
+    }
+
     // arrays with notes for each string
     let first_string = new Array("e","f","f#","g","g#","a","a#","h","c","c#","d","d#","e");
     let second_string = new Array("h","c","c#","d","d#","e","f","f#","g","g#","a","a#","h");
@@ -219,7 +119,8 @@
     let submit = document.querySelector("#submit");
     let text_notes = document.querySelector("#notes");
 
-    function placeNotes(){
+    // function that clears notes from the fretboard
+    function removeClass(){
         // removing from each td "active_note" class
         td_array = document.querySelectorAll("tr.string>td");
         th_array = document.querySelectorAll("th");
@@ -230,7 +131,12 @@
         th_array.forEach(th => {
             th.classList.remove("active_note");
         });
-        
+    }
+
+    function placeNotes(){
+
+        removeClass();
+
         // creating array with notes
         notes = text_notes.value.split(" ");
 
@@ -319,13 +225,23 @@
                 string.innerText = notes2[index_of_note];
             });
         });
-    
-    }
+        
+        }
+        
+        // function that clears the input and notes
+        function clearNotes(){
+            // clear input
+            document.querySelector("#notes_form").reset();
+            // clear notes
+            removeClass();
+        }
+
     // TO DO LIST
-    // - remove the button, do the addEventListener("keypress")
-    // - move css into a html file
-    // - fix those 22 <td> in each table row and just make it into a javascript loop that creates elements
+    // - remove the button, do the addEventListener("keypress") // maybe later, would have to work on it tbh, it updates a note after space, not exactly after you press the note
+    // - move css into a html file (done)
+    // - fix those 22 <td> in each table row and just make it into a javascript loop that creates elements (done)
     // - add clickable notes on a fretboard, so you can hide those that you don't want to see on a fretboard (cannot describe this idea properly)
+    // - add sound for each note
 </script>
 </body>
 </html>
